@@ -47,43 +47,63 @@ const myProject = new Project("Denní úkoly");
 
 const inputElement = document.querySelector(".input");
 const buttonElement = document.querySelector(".add");
-const listElement= document.querySelector(".todoList");
+const listElement = document.querySelector(".todoList");
 
 function render() {
     listElement.innerHTML = "";
 
-
     myProject.todos.forEach((todo) => {
         const newLi = document.createElement("li");
-        newLi.textContent = `${todo.title} (${todo.priority})`;
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = todo.completed;
+
+        checkbox.addEventListener("change", () => {
+            todo.completed = checkbox.checked;
+            saveToStorage();
+            render();
+        });
+
+        const span = document.createElement("span");
+        span.textContent = ` ${todo.title} (${todo.priority}) `;
+        if (todo.completed) {
+            span.classList.add("hotovo");
+        }
 
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "Smazat";
-
         deleteBtn.addEventListener("click", () => {
             myProject.deleteTodo(todo);
-            render();   
-        })
-        
+            saveToStorage();
+            render();
+        });
 
+        newLi.appendChild(checkbox);
+        newLi.appendChild(span);
+        newLi.appendChild(deleteBtn);
         listElement.appendChild(newLi);
-        listElement.appendChild(deleteBtn);
     });
 }
 
 buttonElement.addEventListener("click", () => {
     const text = inputElement.value;
-
     if (text != "") {
         const newTodo = new Todo(text, "Popis...", "10.4.1998", "Střední");
-
         myProject.addTodo(newTodo);
-
-        console.log("Přidáno:", newTodo);
-        console.log("Celý seznam:", myProject.todos);
-
         inputElement.value = "";
-
+        saveToStorage();
         render();
     }
 });
+
+function saveToStorage() {
+    const dataText = JSON.stringify(myProject.todos);
+    localStorage.setItem("mojeUkoly", dataText);
+}
+
+const savedData = localStorage.getItem("mojeUkoly");
+
+if (savedData) {
+    myProject.todos = JSON.parse(savedData);
+    render();
+}

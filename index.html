@@ -3,25 +3,29 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
         <title>Todo</title>
     </head>
     <body>
         <h1>Moje projekty</h1>
 
-        <input type="text" class="input" placeholder="Co musím udělat?" />
+        <input type="text" class="input" id="todo-input" class="input" placeholder="Co musím udělat?">
 
-        <button class="add">Přidat úkol</button>
+        <input type="date" id="todo-date" class="input" style="width: 150px;">
+
+        <select id="todo-priority" class="input" style="width: 120px;">
+            <option value="Low">Nízká</option>
+            <option value="Medium">Střední</option>
+            <option value="High">Vysoká</option>
+        </select>
+
+        <button id="add-btn" class="add">Přidat úkol</button>
         
         <ul class="todoList"></ul>
 
         <script src="foot.js" defer></script>
     </body>
 </html>
-
-<style>
-    .hotovo {
-        text-decoration: line-through; /* Přeškrtnutý text */
-        color: gray;
-        opacity: 0.6;
-    }
-</style>
