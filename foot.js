@@ -4,6 +4,7 @@ class Todo {
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
+        this.completed = false;
     }
 }
 
@@ -41,3 +42,48 @@ class Project {
         }
     }
 }
+
+const myProject = new Project("Denní úkoly");
+
+const inputElement = document.querySelector(".input");
+const buttonElement = document.querySelector(".add");
+const listElement= document.querySelector(".todoList");
+
+function render() {
+    listElement.innerHTML = "";
+
+
+    myProject.todos.forEach((todo) => {
+        const newLi = document.createElement("li");
+        newLi.textContent = `${todo.title} (${todo.priority})`;
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Smazat";
+
+        deleteBtn.addEventListener("click", () => {
+            myProject.deleteTodo(todo);
+            render();   
+        })
+        
+
+        listElement.appendChild(newLi);
+        listElement.appendChild(deleteBtn);
+    });
+}
+
+buttonElement.addEventListener("click", () => {
+    const text = inputElement.value;
+
+    if (text != "") {
+        const newTodo = new Todo(text, "Popis...", "10.4.1998", "Střední");
+
+        myProject.addTodo(newTodo);
+
+        console.log("Přidáno:", newTodo);
+        console.log("Celý seznam:", myProject.todos);
+
+        inputElement.value = "";
+
+        render();
+    }
+});
