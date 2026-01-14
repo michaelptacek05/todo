@@ -1,36 +1,74 @@
-
 body {
-    font-family: 'Montserrat',serif;
-    background-color: #F8F8F8;
-    color: #0B0B0B;
-    max-width: 600px;
-    margin: 0 auto;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    margin: 0;
     padding: 20px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
 }
 
 h1 {
-    color: #0B0B0B;
-    margin-bottom: 20px;
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
 }
 
-input[type="text"] {
-    padding: 10px;
-    width: 60%;
+.input-group {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+input[type="text"], 
+textarea, 
+input[type="date"], 
+select {
+    padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #41be5e;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
 }
 
 .add {
-    padding: 10px 20px;
     background-color: #41be5e;
     color: white;
     border: none;
-    border-radius: 4px;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
     cursor: pointer;
     font-size: 16px;
-    transition: background 0.3s;
+    transition: background 0.2s;
 }
 
 .add:hover {
@@ -38,48 +76,43 @@ input[type="text"] {
 }
 
 ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
-    margin-top: 20px;
 }
 
 li {
     background: white;
-    border-bottom: 1px solid #ddd;
-    padding: 10px 15px;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-li input[type="checkbox"] {
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-li span {
-    flex-grow: 1;
-    text-align: left;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .hotovo {
     text-decoration: line-through;
-    color: #888;
+    color: #aaa;
 }
 
 li button {
-    background-color: #dc3545;
+    background-color: #ff4d4d;
     color: white;
     border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
+    padding: 8px 12px;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 12px;
     margin-left: 10px;
 }
 
-li button:hover {
-    background-color: #dc3545;
+.filter-group {
+    margin-bottom: 15px;
+    text-align: right;
+}
+
+.filter {
+    width: auto;
+    padding: 5px;
 }

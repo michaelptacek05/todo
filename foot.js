@@ -46,13 +46,39 @@ class Project {
 const myProject = new Project("Denní úkoly");
 
 const inputElement = document.querySelector(".input");
+const dateElement = document.querySelector(".date");
+const priorityElement = document.querySelector(".priority");
+const descriptionElement = document.querySelector(".description");
 const buttonElement = document.querySelector(".add");
 const listElement = document.querySelector(".todoList");
+const filterElement = document.querySelector(".filter");
+
+let currentFilter = "all";
+
+if (filterElement) {
+    filterElement.addEventListener("change", () => {
+        currentFilter = filterElement.value;
+        render();
+    });
+}
 
 function render() {
     listElement.innerHTML = "";
+    let tasksToRender = [];
 
-    myProject.todos.forEach((todo) => {
+    if (currentFilter === "all") {
+        tasksToRender = myProject.todos;
+    } else if (currentFilter === "active") {
+        tasksToRender = myProject.todos.filter(
+            (todo) => todo.completed === false
+        );
+    } else if (currentFilter === "completed") {
+        tasksToRender = myProject.todos.filter(
+            (todo) => todo.completed === true
+        );
+    }
+
+    tasksToRender.forEach((todo) => {
         const newLi = document.createElement("li");
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -65,7 +91,13 @@ function render() {
         });
 
         const span = document.createElement("span");
-        span.textContent = ` ${todo.title} (${todo.priority}) `;
+
+        const dateText = todo.dueDate ? todo.dueDate : "Bez data";
+
+        const descText = todo.description ? `(${todo.description})` : "";
+
+        span.textContent = ` ${todo.title} (${todo.priority}) do ${dateText} Popis: ${descText}`;
+
         if (todo.completed) {
             span.classList.add("hotovo");
         }
@@ -87,10 +119,22 @@ function render() {
 
 buttonElement.addEventListener("click", () => {
     const text = inputElement.value;
+    const date = dateElement.value;
+    const description = descriptionElement.value;
+    const priority = priorityElement.value;
+
     if (text != "") {
-        const newTodo = new Todo(text, "Popis...", "10.4.1998", "Střední");
+        const finalDate = date ? date : "Bez data";
+
+        const newTodo = new Todo(text, description, finalDate, priority);
+
         myProject.addTodo(newTodo);
+
         inputElement.value = "";
+        dateElement.value = "";
+        descriptionElement.value = "";
+        priorityElement.value = "Medium";
+
         saveToStorage();
         render();
     }
